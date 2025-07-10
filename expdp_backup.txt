@@ -1,0 +1,79 @@
+Expdp
+
+1) Table-level_expdp
+
+> Create physical directory 
+
+> create logical directory
+
+create of replace directory exp-table as  '/backup/table_exp';
+
+expdp directory = exp_table dumpfile=table_exp.%u.dmp 
+logfile=table_exp.log
+tables=u1.testable parallel=2
+
+2) Schema_level_expdp
+schema=oracle_user
+
+> Create physical directory
+> create logical director 
+>create of replace directory exp_table schema as '/backup/schema_exp';
+
+expdp directory = exp_table Schema
+ 
+dumpfile =schema_exp_exp-%u.dmp  logfile=schema_exp.log
+
+Schemas = ORACLE_USER  parallel = 2
+
+
+3) Tablespace_level_backup
+
+Tablespace - USER, POOJA, TS
+
+>Create physical directory
+
+>create logical directory
+
+>Create or replace directory exp-tablespace tablespace as '/backup/exp_tablespace_exp';
+
+expdp directory = exp_tablespace dumpfile=
+
+1b_exp_u%.dmp   logfile=tb-exp.log
+
+tablespaces = USER, POOJA, TS        Parallel = 2
+
+
+4)  full_database_backup
+
+>Create physical directory
+
+>Create logical directory
+
+>Create or replace directory exp_full as '/backup/ full-database_exp';
+
+expdp directory = exp_full 
+dumpfile= full_database_%U.dmp   logfile = full-database.log    full = Y     parallel=2
+
+
+5) Encryption_password
+
+expdp directory = Exp_scherna dumpfile= encrypt_schema_exp_%u.dmp 
+logfile = encrypt_schema.log      schemas = ORACLE_USER     encryption_password = Welcome 123      parallel=2
+
+
+
+6) Exclude | Include parameter
+
+Exclude
+
+Expdp directory = exp-pooja
+
+dumpfile = table Schema_User_%U.dmp
+
+logfile = Schema_User.log schemas = User
+
+exclude = table: "in ('Emp')"    parallel = 2
+
+Compression = all
+
+

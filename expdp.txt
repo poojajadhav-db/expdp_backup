@@ -1,0 +1,66 @@
+=======================================================expdp===========================================================
+Table_level_expdp
+
+tables=
+ORACLE_USER.ORACLE_DATA
+ROHIT.ORACLE_DATA_1
+
+step 1)
+create physical directory >/exp_backup/table_exp
+step 2)
+create logical directory 
+SQL> create or replace directory exp_table as '/exp_backup/table_exp';
+
+expdp directory=exp_table dumpfile=table_exp_%U.dmp log=table_exp.log tables=ORACLE_USER.ORACLE_DATA,ROHIT.ORACLE_DATA_1 parallel=2
+. . exported "ROHIT"."ORACLE_DATA_1"                     34.24 KB     364 rows
+. . exported "ORACLE_USER"."ORACLE_DATA"                 34.25 KB     364 rows
+***************************************************************************************************************************
+schema_level_EXPDP
+
+ORACLE_USER
+ROHIT      
+
+step 1)
+create physical directory >/exp_backup/schema_exp
+step 2)
+create logical directory 
+create or replace directory exp_schema as '/exp_backup/schema_exp';
+
+expdp directory=exp_schema dumpfile=schema_exp_%U.dmp logfile=schema_exp.log schemas=ORACLE_USER,ROHIT parallel=2
+
+. . exported "ROHIT"."ORACLE_DATA_1"                     34.24 KB     364 rows
+. . exported "ORACLE_USER"."ORACLE_DATA"                 34.25 KB     364 rows
+
+
+***************************************************************************************************************************
+tablespace_level_bkp
+
+ORACLE,USERS,WAKADE
+
+step 1)
+create physical directory >/exp_backup/tablespace_exp
+step 2)
+create logical directory 
+create or replace directory exp_tablespace as '/exp_backup/tablespace_exp';
+
+expdp directory=exp_tablespace dumpfile=tb_exp_%U.dmp logfile=t_exp.log tablespaces=ORACLE,USERS,WAKADE parallel=2
+Job "SYS"."SYS_EXPORT_TABLESPACE_01" successfully completed at Wed Jul 31 12:50:10 2024 elapsed 0 00:00:13
+
+***************************************************************************************************************************
+full_datanase_bkp
+step 1)
+create physical directory >/exp_backup/full_database_exp
+
+step 2)
+create logical directory 
+SQL> create or replace directory exp_full as '/exp_backup/full_database_exp';
+Directory created.
+
+expdp directory=exp_full dumpfile=full_database_%U.dmp logfile=full_database.log full=Y parallel=2 
+
+======================================================================================================
+encryption_password
+
+expdp directory=EXP_SCHEMA dumpfile=encrypt_schema_exp_%U.dmp logfile=encrypt_schema_exp_.log schemas=ORACLE_USER,ROHIT encryption_password=welcome123 parallel=2
+
+==============================================================================================================================
